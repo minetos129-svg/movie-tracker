@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Movie Tracker</title>
+    <meta
+      name="description"
+      content="Track new movie releases, browse trending films, and save favorites."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="container nav">
+        <div class="brand" aria-label="Movie Tracker home">
+          <span class="brand-mark">M</span>
+          <span>MovieTracker</span>
+        </div>
+        <nav class="nav-links" aria-label="Main navigation">
+          <a href="#featured">Featured</a>
+          <a href="#new-releases">New Releases</a>
+          <a href="#watchlist">Watchlist</a>
+        </nav>
+        <button class="nav-button">Your List</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero" id="featured">
+        <div class="container hero-inner">
+          <div class="hero-copy">
+            <span class="eyebrow">Cinema updates</span>
+            <h1>Track the latest movies worth watching.</h1>
+            <p>
+              Browse new releases, spot trending titles, and save the movies you
+              want to watch next.
+            </p>
+            <div class="hero-actions">
+              <a href="#new-releases" class="primary-btn">Explore Movies</a>
+              <button class="secondary-btn" id="jumpToWatchlist">My Watchlist</button>
+            </div>
+            <div class="stats" aria-label="Movie stats">
+              <div>
+                <strong id="totalMovies">0</strong>
+                <span>Movies tracked</span>
+              </div>
+              <div>
+                <strong id="newThisWeek">0</strong>
+                <span>New this week</span>
+              </div>
+              <div>
+                <strong id="favoritesCount">0</strong>
+                <span>Saved</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="spotlight-card" aria-label="Featured movie spotlight">
+            <div class="poster-wrap">
+              <img
+                src="https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?auto=format&fit=crop&w=800&q=80"
+                alt="A movie scene with a cinema style vibe"
+              />
+            </div>
+            <div class="spotlight-content">
+              <span class="label">Featured</span>
+              <h2>Night Signal</h2>
+              <div class="meta-row">
+                <span>2026</span>
+                <span>Action / Sci‑Fi</span>
+                <span>8.7 ★</span>
+              </div>
+              <p>
+                A secret signal from deep space starts an unexpected chase across
+                Earth and beyond.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="movie-controls" id="new-releases">
+        <div class="container controls-wrap">
+          <div class="search-box">
+            <label class="sr-only" for="searchInput">Search movies</label>
+            <input
+              id="searchInput"
+              type="search"
+              placeholder="Search by title or genre..."
+              aria-label="Search movies"
+            />
+          </div>
+          <div class="chip-group" id="filterChips" aria-label="Movie categories">
+            <button class="chip active" data-filter="all">All</button>
+            <button class="chip" data-filter="Action">Action</button>
+            <button class="chip" data-filter="Drama">Drama</button>
+            <button class="chip" data-filter="Sci‑Fi">Sci‑Fi</button>
+            <button class="chip" data-filter="Comedy">Comedy</button>
+            <button class="chip" data-filter="Thriller">Thriller</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="movies-section" id="watchlist">
+        <div class="container section-header">
+          <div>
+            <span class="eyebrow">Curated picks</span>
+            <h2>Fresh movies to track</h2>
+          </div>
+          <span class="chip subtle" id="resultsCount">0 results</span>
+        </div>
+
+        <div class="container">
+          <div id="movieGrid" class="movie-grid" aria-live="polite"></div>
+        </div>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
