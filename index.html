@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Movie Tracker</title>
+    <title>Fake Clock</title>
     <meta
       name="description"
-      content="Track new movie releases, browse trending films, and save favorites."
+      content="A fake clock website with analog and digital time, time zones, and adjustable speed."
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -17,112 +17,419 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <header class="topbar">
-      <div class="container nav">
-        <div class="brand" aria-label="Movie Tracker home">
-          <span class="brand-mark">M</span>
-          <span>MovieTracker</span>
-        </div>
-        <nav class="nav-links" aria-label="Main navigation">
-          <a href="#featured">Featured</a>
-          <a href="#new-releases">New Releases</a>
-          <a href="#watchlist">Watchlist</a>
-        </nav>
-        <button class="nav-button">Your List</button>
-      </div>
-    </header>
-
-    <main>
-      <section class="hero" id="featured">
-        <div class="container hero-inner">
-          <div class="hero-copy">
-            <span class="eyebrow">Cinema updates</span>
-            <h1>Track the latest movies worth watching.</h1>
-            <p>
-              Browse new releases, spot trending titles, and save the movies you
-              want to watch next.
-            </p>
-            <div class="hero-actions">
-              <a href="#new-releases" class="primary-btn">Explore Movies</a>
-              <button class="secondary-btn" id="jumpToWatchlist">My Watchlist</button>
-            </div>
-            <div class="stats" aria-label="Movie stats">
-              <div>
-                <strong id="totalMovies">0</strong>
-                <span>Movies tracked</span>
-              </div>
-              <div>
-                <strong id="newThisWeek">0</strong>
-                <span>New this week</span>
-              </div>
-              <div>
-                <strong id="favoritesCount">0</strong>
-                <span>Saved</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="spotlight-card" aria-label="Featured movie spotlight">
-            <div class="poster-wrap">
-              <img
-                src="https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?auto=format&fit=crop&w=800&q=80"
-                alt="A movie scene with a cinema style vibe"
-              />
-            </div>
-            <div class="spotlight-content">
-              <span class="label">Featured</span>
-              <h2>Night Signal</h2>
-              <div class="meta-row">
-                <span>2026</span>
-                <span>Action / Sci‑Fi</span>
-                <span>8.7 ★</span>
-              </div>
-              <p>
-                A secret signal from deep space starts an unexpected chase across
-                Earth and beyond.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="movie-controls" id="new-releases">
-        <div class="container controls-wrap">
-          <div class="search-box">
-            <label class="sr-only" for="searchInput">Search movies</label>
-            <input
-              id="searchInput"
-              type="search"
-              placeholder="Search by title or genre..."
-              aria-label="Search movies"
-            />
-          </div>
-          <div class="chip-group" id="filterChips" aria-label="Movie categories">
-            <button class="chip active" data-filter="all">All</button>
-            <button class="chip" data-filter="Action">Action</button>
-            <button class="chip" data-filter="Drama">Drama</button>
-            <button class="chip" data-filter="Sci‑Fi">Sci‑Fi</button>
-            <button class="chip" data-filter="Comedy">Comedy</button>
-            <button class="chip" data-filter="Thriller">Thriller</button>
-          </div>
-        </div>
-      </section>
-
-      <section class="movies-section" id="watchlist">
-        <div class="container section-header">
+    <div class="page-shell">
+      <header class="topbar">
+        <div class="brand-wrap">
+          <div class="brand-mark">F</div>
           <div>
-            <span class="eyebrow">Curated picks</span>
-            <h2>Fresh movies to track</h2>
+            <p class="eyebrow">Simulation</p>
+            <h1>Fake Clock</h1>
           </div>
-          <span class="chip subtle" id="resultsCount">0 results</span>
+        </div>
+      </header>
+
+      <main class="clock-layout">
+        <section class="clock-panel analog-panel">
+          <div class="clock-face" aria-label="Analog clock face">
+            <div class="clock-center"></div>
+            <div class="hand hour-hand" id="hourHand"></div>
+            <div class="hand minute-hand" id="minuteHand"></div>
+            <div class="hand second-hand" id="secondHand"></div>
+
+            <span class="digit d12">12</span>
+            <span class="digit d3">3</span>
+            <span class="digit d6">6</span>
+            <span class="digit d9">9</span>
+          </div>
+        </section>
+
+        <section class="clock-panel digital-panel">
+          <div class="status-row">
+            <span class="live-pill" id="liveStatus">Running</span>
+            <span class="speed-pill" id="speedLabel">1x</span>
+          </div>
+
+          <div class="time-block">
+            <p class="label">Current time</p>
+            <h2 id="digitalTime">00:00:00</h2>
+          </div>
+
+          <div class="date-block">
+            <p class="label">Date</p>
+            <p id="dateValue">Monday, January 1</p>
+          </div>
+
+          <div class="timezone-control">
+            <label for="timezoneSelect">Timezone</label>
+            <select id="timezoneSelect" aria-label="Choose timezone">
+              <option value="local">Local</option>
+              <option value="UTC">UTC</option>
+              <option value="America/New_York">New York</option>
+              <option value="Europe/London">London</option>
+              <option value="Europe/Paris">Paris</option>
+              <option value="Asia/Tokyo">Tokyo</option>
+              <option value="Australia/Sydney">Sydney</option>
+            </select>
+          </div>
+        </section>
+      </main>
+
+      <section class="controls-panel">
+        <div class="button-row main-controls">
+          <button class="control-btn primary" id="toggleClock">Pause</button>
+          <button class="control-btn" id="resetClock">Reset</button>
         </div>
 
-        <div class="container">
-          <div id="movieGrid" class="movie-grid" aria-live="polite"></div>
+        <div class="button-row speed-controls">
+          <button class="control-btn" id="slowSpeed">Slow</button>
+          <button class="control-btn" id="normalSpeed">Normal</button>
+          <button class="control-btn" id="fastSpeed">Fast</button>
+        </div>
+
+        <div class="button-row jump-controls">
+          <button class="control-btn" id="minusHour">-1 hour</button>
+          <button class="control-btn" id="plusHour">+1 hour</button>
+          <button class="control-btn" id="minusMinute">-30 min</button>
+          <button class="control-btn" id="plusMinute">+30 min</button>
+        </div>
+
+        <div class="custom-time">
+          <label for="customTimeInput">Set time</label>
+          <input type="time" id="customTimeInput" value="00:00" />
+          <button class="control-btn primary" id="applyTime">Apply</button>
         </div>
       </section>
-    </main>
+    </div>
 
     <script src="script.js"></script>
   </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
