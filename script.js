@@ -71,30 +71,30 @@ function formatTimeForDisplay(date, timezone) {
   return formatter.format(date);
 }
 
-function setCustomTimeFromInput(dateValueObject) {
-  const [hours, minutes] = customTimeInput.value
-    .split(':')
-    .map((item) => Number(item));
+function setCustomTimeFromInput() {
+  const [hours, minutes] = customTimeInput.value.split(':').map(Number);
 
   if (Number.isNaN(hours) || Number.isNaN(minutes)) return;
 
   const timezone = getTimeZoneValue();
-  const currentDate = new Date(state.fakeNow);
-  const parts = getDateTimeParts(currentDate, timezone);
+  const date = new Date(state.fakeNow);
+  const parts = getDateTimeParts(date, timezone);
 
-  const newDate = new Date(Date.UTC(
-    parts.year,
-    new Date(`${parts.month} ${parts.day}, ${parts.year}`).getUTCMonth(),
-    parts.day,
-    hours,
-    minutes,
-    0,
-    0
-  ));
+  const fakeDate = new Date(
+    Date.UTC(
+      parts.year,
+      new Date(`${parts.month} ${parts.day}, ${parts.year}`).getUTCMonth(),
+      parts.day,
+      hours,
+      minutes,
+      0,
+      0
+    )
+  );
 
-  const now = new Date();
-  const baseTime = now.getTime() - state.fakeNow;
-  state.fakeNow = newDate.getTime() - baseTime;
+  const realNow = new Date();
+  const offset = realNow.getTime() - state.fakeNow;
+  state.fakeNow = fakeDate.getTime() - offset;
 }
 
 function updateClockView() {
@@ -111,7 +111,7 @@ function updateClockView() {
 
   const hourAngle = ((parts.hour % 12) + parts.minute / 60 + parts.second / 3600) * 30 - 90;
   const minuteAngle = (parts.minute + parts.second / 60) * 6 - 90;
-  const secondAngle = (parts.second * 6) - 90;
+  const secondAngle = parts.second * 6 - 90;
 
   hourHand.style.transform = `translateX(-50%) rotate(${hourAngle}deg)`;
   minuteHand.style.transform = `translateX(-50%) rotate(${minuteAngle}deg)`;
@@ -176,9 +176,7 @@ timezoneSelect.addEventListener('change', () => {
 toggleClockButton.addEventListener('click', toggleClock);
 resetClockButton.addEventListener('click', resetClock);
 
-applyTimeButton.addEventListener('click', () => {
-  setCustomTimeFromInput();
-});
+applyTimeButton.addEventListener('click', setCustomTimeFromInput);
 
 document.getElementById('slowSpeed').addEventListener('click', () => changeSpeed(0.5));
 document.getElementById('normalSpeed').addEventListener('click', () => changeSpeed(1));
@@ -191,266 +189,3 @@ document.getElementById('minusHour').addEventListener('click', () => adjustHours
 
 resetClock();
 requestAnimationFrame(animate);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
